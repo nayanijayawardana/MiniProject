@@ -32,7 +32,7 @@ namespace CodeFirstDB
             services.AddControllers();
 
             services.AddControllersWithViews();
-            services.AddDbContext<VotingDbContext>(o => o.UseSqlServer(Configuration.GetConnectionString("VotingDatabase")));
+            services.AddDbContext<VotingDbContext>(o => o.UseSqlServer(Configuration.GetConnectionString("VotingDb")));
             services.AddScoped<IBookService, BookService>();
 
         }
