@@ -21,14 +21,14 @@ namespace CodeFirstDB.Controllers
             bookService = book;
         }
 
-        [HttpGet]
-        [Route("[action]")]
-        [Route("api/Book/GetBook")]
+        //[HttpGet]
+        //[Route("[action]")]
+        //[Route("api/Book/GetBook")]
 
-        public IEnumerable<Book> GetBook()
-        {
-            return bookService.GetBook();
-        }
+        //public IEnumerable<Book> GetBook()
+        //{
+        //    return bookService.GetBook();
+        //}
 
         [HttpPost]
         [Route("[action]")]
