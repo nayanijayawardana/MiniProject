@@ -19,6 +19,7 @@ namespace CodeFirstDB.ViewModle
         [Required]
         [StringLength(50)]
         public string ISBN { get; set; }
+        
 
         [Column("Title")]
         [Required]

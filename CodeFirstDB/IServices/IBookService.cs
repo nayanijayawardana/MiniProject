@@ -12,5 +12,6 @@ namespace CodeFirstDB.IServices
 
         Book AddBook(Book book);
 
+        Book DeleteBook(string isbn);
     }
 }

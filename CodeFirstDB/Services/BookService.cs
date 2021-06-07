@@ -1,6 +1,7 @@
 ﻿using CodeFirstDB.DataLayer;
 using CodeFirstDB.IServices;
 using CodeFirstDB.ViewModle;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace CodeFirstDB.Services
         {
             var book = dbcontext.Books.ToList();
             return book;
+
         }
 
         public Book AddBook(Book book)
@@ -32,11 +34,24 @@ namespace CodeFirstDB.Services
                 return book;
             }
 
+            //if (book.ISBN)
+            //{
+            //    Console.WriteLine(" Already exist");
+            //}
+
             //if (VotingDbContext.Book.Any(o => o.Id == idToMatch))
             //{
             //    // Match!
             //}
             return null;
+        }
+
+        public Book DeleteBook(string isbn)
+        {
+            var book = dbcontext.Books.FirstOrDefault(x => x.ISBN == isbn);
+            dbcontext.Entry(book).State = EntityState.Deleted;
+            dbcontext.SaveChanges();
+            return book;
         }
     }
 
