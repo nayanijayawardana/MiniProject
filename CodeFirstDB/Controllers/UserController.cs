@@ -14,6 +14,7 @@ namespace CodeFirstDB.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService userService;
+        private string message;
 
         public UserController(IUserService user)
         {
@@ -36,8 +37,9 @@ namespace CodeFirstDB.Controllers
 
         public User AddUser(User user)
         {
-            return userService.AddUser(user);
+           return userService.AddUser(user);
         }
+
 
 
         [HttpPut]

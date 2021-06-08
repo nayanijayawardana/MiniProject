@@ -34,7 +34,7 @@ namespace CodeFirstDB.ViewModle
         [Column("Status")]
         //DatabaseGenerated(DatabaseGeneratedOption.DEFAULT 1)]
         [Required]
-        public Boolean Status { get; set; } = true;
+        public bool Status { get; set; } = true;
        
 
     }

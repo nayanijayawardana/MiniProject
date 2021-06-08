@@ -22,9 +22,11 @@ namespace CodeFirstDB.ViewModle
         [ForeignKey("UserID")]
         public virtual User User { get; set; }
 
+        //public int UserId { get; set; }
+
         [Column("Value")]
         [Required]
-        public decimal Value { get; set; }
+        public int Value { get; set; }
 
 
 

@@ -27,7 +27,7 @@ namespace CodeFirstDB.ViewModle
 
         [Column("Age")]
         [Required]
-        public Int64 Age { get; set; }
+        public int Age { get; set; }
 
     }
 }
