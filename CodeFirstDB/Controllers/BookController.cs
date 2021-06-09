@@ -35,7 +35,6 @@ namespace CodeFirstDB.Controllers
 
         public Book AddBook(Book book)
         {
-            
             return bookService.AddBook(book);
         }
 

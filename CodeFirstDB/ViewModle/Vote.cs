@@ -17,19 +17,23 @@ namespace CodeFirstDB.ViewModle
         public int VoteId { get; set; }
 
         [ForeignKey("BookID")]
+        public int BookId { get; set; }
         public virtual Book Book { get; set; }
 
-        [ForeignKey("UserID")]
-        public virtual User User { get; set; }
+        //[Display(Name = "Book")]
+        //public virtual int BookId { get; set; }
+        //[ForeignKey("BookId")]
+        //public virtual Book book { get; set; }
 
+        [ForeignKey("UserID")]
+        public int UserId { get; set; }
+        public virtual User User { get; set; }
+        
         //public int UserId { get; set; }
 
         [Column("Value")]
         [Required]
-        public int Value { get; set; }
-
-
-
+        public Int64 Value { get; set; }
     }
 
 }

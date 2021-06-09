@@ -35,6 +35,7 @@ namespace CodeFirstDB
             services.AddDbContext<VotingDbContext>(o => o.UseSqlServer(Configuration.GetConnectionString("VotingDb")));
             services.AddScoped<IBookService, BookService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IVoteService, VoteService>();
 
         }
 
