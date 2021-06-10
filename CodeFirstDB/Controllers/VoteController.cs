@@ -30,6 +30,7 @@ namespace CodeFirstDB.Controllers
         }
 
         [HttpPost]
+        [HttpPut]
         [Route("[action]")]
         [Route("api/Vote/VoteBook")]
 

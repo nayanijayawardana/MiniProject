@@ -20,12 +20,7 @@ namespace CodeFirstDB.Services
             dbcontext = _db;
         }
 
-        //public Vote VoteBook(Vote vote)
-        //{
-        //    dbcontext.Entry(vote).State = EntityState.Modified;
-        //    dbcontext.SaveChanges();
-        //    return vote;
-        //}
+        
         public IEnumerable<Vote> GetVote()
         {
             var vote = dbcontext.Votes.ToList();
@@ -34,12 +29,36 @@ namespace CodeFirstDB.Services
 
         public Vote addvote(Vote vote)
         {
-            if (vote != null)
+
+            //var validvote = dbcontext.Votes.Any(y => y.UserId == vote.UserId && y.BookId == vote.BookId);
+            //if (validvote == true)
+            //{
+            //    dbcontext.Votes.Entry(Vote);
+            //    dbcontext.ObjectStateManager.ChangeObjectState(Vote, EntityState.Modified);
+            //}
+            //else
+            //{
+            //    dbcontext.Votes.Add(Vote);
+            //}
+
+            //dbcontext.SaveChanges();
+
+
+            var validvote = dbcontext.Votes.FirstOrDefault(y => y.UserId == vote.UserId && y.BookId == vote.BookId);
+            if (validvote != null)
+            {
+                validvote.Value = vote.Value;
+                //dbcontext.Entry(vote).State = EntityState.Modified;
+                dbcontext.SaveChanges();
+                return vote;
+            }
+            else 
             {
                 dbcontext.Votes.Add(vote);
                 dbcontext.SaveChanges();
                 return vote;
             }
+            
             return null;
         }
 

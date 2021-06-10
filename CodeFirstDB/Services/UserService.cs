@@ -28,12 +28,8 @@ namespace CodeFirstDB.Services
             return user;
 
         }
-
-       
-
         public User AddUser(User user)
-        {
-
+        { 
             var uvalidation = dbcontext.Users.Any(o => o.NIC == user.NIC);
             if (uvalidation == true)
             {
