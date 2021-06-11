@@ -16,9 +16,9 @@ namespace CodeFirstDB.Controllers
         private readonly IVoteService voteService;
         private string message;
 
-        public VoteController(IVoteService user)
+        public VoteController(IVoteService vote)
         {
-            voteService = user;
+            voteService = vote;
         }
 
         [HttpGet]
@@ -37,6 +37,16 @@ namespace CodeFirstDB.Controllers
         public Vote VoteBook(Vote vote)
         {
             return voteService.addvote(vote);
+        }
+
+
+        [HttpGet]
+        [Route("[action]")]
+        [Route("api/Vote/tvote")]
+
+        public int tvote(string isbn)
+        {
+            return voteService.tvote(isbn);
         }
     }
 }
