@@ -49,9 +49,6 @@ namespace CodeFirstDB.Services
         }
 
         //for get total vote by isbn API
-        //public Vote tvote(string isbn)
-        //public IEnumerable<Vote> tvote(string isbn)
-
         public int tvote(string isbn)
         {
             var count = from b in dbcontext.Books
@@ -65,11 +62,42 @@ namespace CodeFirstDB.Services
             var totalupvote = count.Count();
             return totalupvote;
 
-            //var totalupvote = count.Count();
-            //int total = dbcontext.Votes.Count(count);
-            //var totalAge = (from s in dbcontext.Votes
-            //                select s.Value).Count();
-            //return totalupvote == null ? 0 : totalupvote.Value;
+           
+        }
+
+
+        //for get alldownvote less than 0
+        //public IEnumerable<Vote> getdownVote()
+        //{
+
+        //    var upvote = (from a in dbcontext.Votes
+        //                  where a.Value == 1
+        //                  select a.Value).Count();
+        //    var downvote = (from a in dbcontext.Votes
+        //                    where a.Value == -1
+        //                    select a.Value).Count();
+
+        //    if ( downvote > upvote)
+        //    {
+        //        var downlist =Convert.(from a in dbcontext.Votes
+        //                       where a.Value == -1
+        //                       select a.BookId).ToList();
+
+        //        return (IEnumerable<Vote>) downlist;
+
+        //    }
+
+        //    return null;
+        //}
+
+
+        public List<int> lessvote()
+        {
+            var votesum = (from b in dbcontext.Votes
+                           group b by b.BookId into g
+                           where g.Sum(x => x.Value) < 0
+                           select g.Key).ToList();
+            return votesum;
         }
 
     }

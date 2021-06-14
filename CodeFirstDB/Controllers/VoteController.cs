@@ -48,5 +48,23 @@ namespace CodeFirstDB.Controllers
         {
             return voteService.tvote(isbn);
         }
+
+        //[HttpGet]
+        //[Route("[action]")]
+        //[Route("api/Vote/getdownvote")]
+
+        //public IEnumerable<Vote> getdownvote()
+        //{
+        //    return voteService.getdownVote();
+        //}
+
+        [HttpGet]
+        [Route("[action]")]
+        [Route("api/Vote/lessvote")]
+
+        public List<int> lessvote()
+        {
+            return voteService.lessvote();
+        }
     }
 }

@@ -33,7 +33,7 @@ namespace CodeFirstDB.ViewModle
 
         [Column("Value")]
         [Required]
-        public Int64 Value { get; set; }
+        public int Value { get; set; }
     }
 
 }
