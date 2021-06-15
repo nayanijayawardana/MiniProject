@@ -15,10 +15,12 @@ namespace CodeFirstDB.IServices
         int tvote(string isbn);
 
         List<int> lessvote();
-        
 
-       //IEnumerable<Vote> getdownVote();
-       //int getdownVote();
+        //IEnumerable<List<int>> userlist();
+
+        List<Vote> Getuserlist();
+        //IEnumerable<Vote> getdownVote();
+        //int getdownVote();
 
     }
 }

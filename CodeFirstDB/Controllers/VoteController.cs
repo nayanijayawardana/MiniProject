@@ -66,5 +66,14 @@ namespace CodeFirstDB.Controllers
         {
             return voteService.lessvote();
         }
+
+        [HttpGet]
+        [Route("[action]")]
+        [Route("api/Vote/Getuserlist")]
+
+        public List<Vote> Getuserlist()
+        {
+            return voteService.Getuserlist();
+        }
     }
 }

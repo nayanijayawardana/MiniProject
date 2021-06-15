@@ -100,6 +100,36 @@ namespace CodeFirstDB.Services
             return votesum;
         }
 
+
+        //public List<Vote> userlist()
+        //{
+        //    var ulist = (from p in dbcontext.Votes
+        //               where p.Value == -1
+        //               select new
+        //               {
+        //                   ulist = p.UserId,
+        //                   blist = p.BookId
+        //               }).ToList();
+            
+        //    return List<int> ulist;
+        //}
+
+        public List<Vote> Getuserlist()
+        {
+            var results = dbcontext.Votes
+                .Where(x => x.Value == -1)
+                .Select(x => new Vote()
+            {
+                UserId = x.UserId,
+                BookId= x.BookId,
+                
+            })
+            .ToList();
+
+            return results;
+        }
+
+
     }
 }
 
