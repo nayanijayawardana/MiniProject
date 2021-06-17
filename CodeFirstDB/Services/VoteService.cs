@@ -96,7 +96,7 @@ namespace CodeFirstDB.Services
             var obj = dbcontext.Votes.GroupBy(x => new
             {
                 x.BookId,
-            }).Select(grp => new DownvotedBooks
+            }).Select(grp => new
             {
                 BookId = grp.Key.BookId,
                 BookName = grp.Select(y => y.Book).First().Description,
@@ -104,14 +104,13 @@ namespace CodeFirstDB.Services
                 TotalVoteVal = grp.Sum(y => y.Value)
             })
             .Where(r => r.TotalVoteVal < 0)
-            .ToList();
-            //.AsEnumerable()
-            //.Select(z => new DownvotedBooks
-            //{
-            //    BookId = z.BookId,
-            //    BookName = z.BookName,
-            //    DownvotedUsers = z.DownvotedUsers
-            //}).ToList();
+            .AsEnumerable()
+            .Select(z => new DownvotedBooks
+            {
+                BookId = z.BookId,
+                BookName = z.BookName,
+                DownvotedUsers = z.DownvotedUsers
+            }).ToList();
 
             return obj;
         }
