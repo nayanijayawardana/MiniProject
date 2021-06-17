@@ -91,13 +91,37 @@ namespace CodeFirstDB.Services
         //}
 
 
-        public List<int> lessvote()
+        public List<DownvotedBooks> lessvote()
         {
-            var votesum = (from b in dbcontext.Votes
-                           group b by b.BookId into g
-                           where g.Sum(x => x.Value) < 0
-                           select g.Key).ToList();
-            return votesum;
+            var obj = dbcontext.Votes.GroupBy(x => new
+            {
+                x.BookId,
+            }).Select(grp => new DownvotedBooks
+            {
+                BookId = grp.Key.BookId,
+                BookName = grp.Select(y => y.Book).First().Description,
+                DownvotedUsers = grp.Select(y => y.User.UserName).ToArray(),
+                TotalVoteVal = grp.Sum(y => y.Value)
+            })
+            .Where(r => r.TotalVoteVal < 0)
+            .ToList();
+            //.AsEnumerable()
+            //.Select(z => new DownvotedBooks
+            //{
+            //    BookId = z.BookId,
+            //    BookName = z.BookName,
+            //    DownvotedUsers = z.DownvotedUsers
+            //}).ToList();
+
+            return obj;
+        }
+
+        public class DownvotedBooks
+        {
+            public int BookId { get; set; }
+            public string BookName { get; set; }
+            public string[] DownvotedUsers { get; set; }
+            public int TotalVoteVal { get; set; }
         }
 
 
