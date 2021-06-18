@@ -6,6 +6,7 @@ using CodeFirstDB.IServices;
 using CodeFirstDB.ViewModle;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using static CodeFirstDB.Services.VoteService;
 
 namespace CodeFirstDB.Controllers
 {
@@ -62,7 +63,8 @@ namespace CodeFirstDB.Controllers
         [Route("[action]")]
         [Route("api/Vote/lessvote")]
 
-        public List<int> lessvote()
+        //public ArraySegment<int> lessvote()
+        public ArraySegment<int> lessvote()
         {
             return voteService.lessvote();
         }

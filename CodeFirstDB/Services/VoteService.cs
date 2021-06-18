@@ -62,43 +62,22 @@ namespace CodeFirstDB.Services
             var totalupvote = count.Count();
             return totalupvote;
 
-           
+
         }
 
 
-        //for get alldownvote less than 0
-        //public IEnumerable<Vote> getdownVote()
-        //{
-
-        //    var upvote = (from a in dbcontext.Votes
-        //                  where a.Value == 1
-        //                  select a.Value).Count();
-        //    var downvote = (from a in dbcontext.Votes
-        //                    where a.Value == -1
-        //                    select a.Value).Count();
-
-        //    if ( downvote > upvote)
-        //    {
-        //        var downlist =Convert.(from a in dbcontext.Votes
-        //                       where a.Value == -1
-        //                       select a.BookId).ToList();
-
-        //        return (IEnumerable<Vote>) downlist;
-
-        //    }
-
-        //    return null;
-        //}
-
-
-        public List<int> lessvote()
+       // for get alldownvote less than 0 ---my
+        public ArraySegment<int> lessvote()
         {
             var votesum = (from b in dbcontext.Votes
                            group b by b.BookId into g
                            where g.Sum(x => x.Value) < 0
-                           select g.Key).ToList();
+                           select g.Key).ToArray();
             return votesum;
         }
+
+
+        
 
 
         //public List<Vote> userlist()
@@ -110,26 +89,40 @@ namespace CodeFirstDB.Services
         //                   ulist = p.UserId,
         //                   blist = p.BookId
         //               }).ToList();
-            
+
         //    return List<int> ulist;
         //}
 
+
+        //get the list of users and their upvoted
+        //public List<(string, int?)> Getuserlist(string isbn)
         public List<Vote> Getuserlist()
+
         {
             var results = dbcontext.Votes
-                .Where(x => x.Value == -1)
+                .Where(x => x.Value == 1)
                 .Select(x => new Vote()
-            {
-                UserId = x.UserId,
-                BookId= x.BookId,
-                
-            })
+                {
+                    UserId = x.UserId,
+                    BookId = x.BookId,
+                    
+                })
             .ToList();
-
             return results;
+
+            //var results = dbcontext.Books.Join(dbcontext.Votes,
+            //                                    s => s.BookId,
+            //                                    p => p.BookId,
+            //                                    (s, p) => new
+            //                                    {
+            //                                        isbnno = s.ISBN,
+            //                                        users = p.UserId,
+            //                                        value = p.Value
+                                                     // DownvotedUsers = (s,p).Select(y => y.User.UserName).ToArray(),
+            //                                    })
+            //                                    .Where(k => k.isbnno == isbn && k.value == 1).ToList();
+            //return results;
         }
-
-
     }
 }
 
