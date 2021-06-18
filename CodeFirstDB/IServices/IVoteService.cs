@@ -15,14 +15,8 @@ namespace CodeFirstDB.IServices
 
         int tvote(string isbn);
 
-        ArraySegment<int> lessvote();
+        List<DownvotedBooks> lessvote();
 
-        //IEnumerable<List<int>> userlist();
-
-        List<Vote> Getuserlist();
-        //IEnumerable<Vote> getdownVote();
-        //int getdownVote();
-       
-
+        List<UpvotedUserList> Getuserlist(string name);
     }
 }

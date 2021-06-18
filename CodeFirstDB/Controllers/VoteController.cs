@@ -24,14 +24,14 @@ namespace CodeFirstDB.Controllers
 
         [HttpGet]
         [Route("[action]")]
-        [Route("api/Vote/GetVote")]
+        [Route("api/Vote/getvote")]
         public IEnumerable<Vote> GetVote()
         {
             return voteService.GetVote();
         }
 
         [HttpPost]
-        [HttpPut]
+        //[HttpPut]
         [Route("[action]")]
         [Route("api/Vote/VoteBook")]
 
@@ -63,8 +63,7 @@ namespace CodeFirstDB.Controllers
         [Route("[action]")]
         [Route("api/Vote/lessvote")]
 
-        //public ArraySegment<int> lessvote()
-        public ArraySegment<int> lessvote()
+        public List<DownvotedBooks> lessvote()
         {
             return voteService.lessvote();
         }
@@ -73,9 +72,9 @@ namespace CodeFirstDB.Controllers
         [Route("[action]")]
         [Route("api/Vote/Getuserlist")]
 
-        public List<Vote> Getuserlist()
+        public List<UpvotedUserList> Getuserlist(string name)
         {
-            return voteService.Getuserlist();
+            return voteService.Getuserlist(name);
         }
     }
 }

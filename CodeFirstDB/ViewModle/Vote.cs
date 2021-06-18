@@ -28,12 +28,13 @@ namespace CodeFirstDB.ViewModle
         [ForeignKey("UserID")]
         public int UserId { get; set; }
         public virtual User User { get; set; }
-        
+
         //public int UserId { get; set; }
 
         [Column("Value")]
         [Required]
-        public Int64 Value { get; set; }
+        public long Value { get; set; }
+
     }
 
 }

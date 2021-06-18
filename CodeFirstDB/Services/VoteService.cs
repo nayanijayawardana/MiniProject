@@ -61,68 +61,66 @@ namespace CodeFirstDB.Services
                         };
             var totalupvote = count.Count();
             return totalupvote;
-
-
         }
 
-
-       // for get alldownvote less than 0 ---my
-        public ArraySegment<int> lessvote()
+        //list of books where the total vote < 0 with Users
+        public List<DownvotedBooks> lessvote()
         {
-            var votesum = (from b in dbcontext.Votes
-                           group b by b.BookId into g
-                           where g.Sum(x => x.Value) < 0
-                           select g.Key).ToArray();
-            return votesum;
+            var obj = dbcontext.Votes.Include(x => x.Book).Include(x => x.User).ToList()
+                .GroupBy(x => new
+                {
+                    x.BookId,
+                }).Select(grp => new
+                {
+                    BookId = grp.Key.BookId,
+                    BookName = grp.Select(y => y.Book)?.FirstOrDefault()?.Description,
+                    DownvotedUsers = grp.Select(y => y.User?.UserName)?.ToList(),
+                    TotalVoteVal = grp.Sum(y => y.Value)
+                })
+                .Where(r => r.TotalVoteVal < 0)
+                .Select(z => new DownvotedBooks
+                {
+                    BookId = z.BookId,
+                    BookName = z.BookName,
+                    DownvotedUsers = z.DownvotedUsers
+                }).ToList();
+
+            return obj;
         }
 
-
-        
-
-
-        //public List<Vote> userlist()
-        //{
-        //    var ulist = (from p in dbcontext.Votes
-        //               where p.Value == -1
-        //               select new
-        //               {
-        //                   ulist = p.UserId,
-        //                   blist = p.BookId
-        //               }).ToList();
-
-        //    return List<int> ulist;
-        //}
+        public class DownvotedBooks
+        {
+            public int BookId { get; set; }
+            public string BookName { get; set; }
+            public List<string> DownvotedUsers { get; set; }
+        }
 
 
         //get the list of users and their upvoted
-        //public List<(string, int?)> Getuserlist(string isbn)
-        public List<Vote> Getuserlist()
-
+        public List<UpvotedUserList> Getuserlist(string name)
         {
-            var results = dbcontext.Votes
-                .Where(x => x.Value == 1)
-                .Select(x => new Vote()
-                {
-                    UserId = x.UserId,
-                    BookId = x.BookId,
-                    
-                })
-            .ToList();
-            return results;
+            var results = dbcontext.Votes.Include(x => x.Book).Include(x => x.User).ToList()
+                          .Where(c => c.Value == 1 && c.User.UserName.Contains(name))
+                          .Select(gr => new UpvotedUserList
+                          {
 
-            //var results = dbcontext.Books.Join(dbcontext.Votes,
-            //                                    s => s.BookId,
-            //                                    p => p.BookId,
-            //                                    (s, p) => new
-            //                                    {
-            //                                        isbnno = s.ISBN,
-            //                                        users = p.UserId,
-            //                                        value = p.Value
-                                                     // DownvotedUsers = (s,p).Select(y => y.User.UserName).ToArray(),
-            //                                    })
-            //                                    .Where(k => k.isbnno == isbn && k.value == 1).ToList();
-            //return results;
+                              UserNames = gr.User.UserName,
+                              Description = gr.Book.Description
+
+
+                          })
+                          
+                          .ToList();
+            return results;
         }
+
+        public class UpvotedUserList
+        {
+            public string Description { get; set; }
+            public string UserNames { get; set; }
+        }
+
+
     }
 }
 
