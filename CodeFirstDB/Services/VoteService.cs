@@ -93,24 +93,24 @@ namespace CodeFirstDB.Services
 
         public List<DownvotedBooks> lessvote()
         {
-            var obj = dbcontext.Votes.GroupBy(x => new
-            {
-                x.BookId,
-            }).Select(grp => new
-            {
-                BookId = grp.Key.BookId,
-                BookName = grp.Select(y => y.Book).First().Description,
-                DownvotedUsers = grp.Select(y => y.User.UserName).ToArray(),
-                TotalVoteVal = grp.Sum(y => y.Value)
-            })
-            .Where(r => r.TotalVoteVal < 0)
-            .AsEnumerable()
-            .Select(z => new DownvotedBooks
-            {
-                BookId = z.BookId,
-                BookName = z.BookName,
-                DownvotedUsers = z.DownvotedUsers
-            }).ToList();
+            var obj = dbcontext.Votes.Include(x => x.Book).Include(x => x.User).ToList()
+                .GroupBy(x => new
+                {
+                    x.BookId,
+                }).Select(grp => new
+                {
+                    BookId = grp.Key.BookId,
+                    BookName = grp.Select(y => y.Book)?.FirstOrDefault()?.Description,
+                    DownvotedUsers = grp.Select(y => y.User?.UserName)?.ToList(),
+                    TotalVoteVal = grp.Sum(y => y.Value)
+                })
+                .Where(r => r.TotalVoteVal < 0)
+                .Select(z => new DownvotedBooks
+                {
+                    BookId = z.BookId,
+                    BookName = z.BookName,
+                    DownvotedUsers = z.DownvotedUsers
+                }).ToList();
 
             return obj;
         }
@@ -119,8 +119,7 @@ namespace CodeFirstDB.Services
         {
             public int BookId { get; set; }
             public string BookName { get; set; }
-            public string[] DownvotedUsers { get; set; }
-            public int TotalVoteVal { get; set; }
+            public List<string> DownvotedUsers { get; set; }
         }
 
 
